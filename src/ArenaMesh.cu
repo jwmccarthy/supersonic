@@ -105,21 +105,12 @@ Grid ArenaMesh::buildBroadphaseGrid(Mesh& m)
         m.aabbMax[i] = vec3::max(vec3::max(v0, v1), v2);
     }
 
-    std::vector<int> debugCounts;
-
     // 1D grid storage via prefix sum
     std::vector<int> triPre(nCells + 1, 0);
     for (int i = 0; i < nCells; ++i)
     {
         debugCounts.push_back(cells[i].size());
         triPre[i + 1] = triPre[i] + cells[i].size();
-    }
-
-    std::sort(debugCounts.begin(), debugCounts.end(), std::greater<int>());
-
-    for (int i = 0; i < 4096; i++)
-    {
-        std::cout << debugCounts[i] << std::endl;
     }
 
     // Construct triangle indices
