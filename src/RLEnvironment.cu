@@ -3,6 +3,7 @@
 #include "CudaKernels.cuh"
 #include "RLEnvironment.cuh"
 
+#include <iostream>
 #include <cub/device/device_scan.cuh>
 
 using ds = cub::DeviceScan;

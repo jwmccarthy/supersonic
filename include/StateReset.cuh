@@ -18,12 +18,12 @@ __device__ __forceinline__ void resetCar(Cars* cars, int carIdx, int locIdx, boo
 {
     CarSpawn loc = KICKOFF_LOCATIONS[locIdx % 5];
 
-    float x   = loc.x;
-    float y   = loc.y;
-    float z   = loc.z;
-    float yaw = loc.yaw;
+    // Reflect location based on team
+    float x   = invert ? -loc.x   : loc.x;
+    float y   = invert ? -loc.y   : loc.y;
+    float yaw = invert ? -loc.yaw : loc.yaw;;
 
-    cars->pos[carIdx] = { x, y, z, 0 };
+    cars->pos[carIdx] = { x, y, loc.z, 0 };
     cars->vel[carIdx] = { 0, 0, 0, 0 };
     cars->ang[carIdx] = { 0, 0, 0, 0 };
     cars->rot[carIdx] = { 0, 0, sinf(yaw / 2), cosf(yaw / 2) };

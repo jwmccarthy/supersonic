@@ -47,6 +47,7 @@ __device__ __forceinline__ void carArenaBroadPhase(
     int numTris = __ldg(&arena->triPre[cellIdx + 1]) - __ldg(&arena->triPre[cellIdx]);
 
     // Store for narrow phase
+    space->cellIdx[carIdx] = cellIdx;
     space->numTris[carIdx] = numTris;
 }
 

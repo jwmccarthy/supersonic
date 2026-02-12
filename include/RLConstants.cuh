@@ -76,8 +76,8 @@ __device__ constexpr float4 WORLD_Y = { 0, 1, 0 };
 __device__ constexpr float4 WORLD_Z = { 0, 0, 1 };
 
 // Arena extents
-__device__ constexpr float4 ARENA_MIN = { -6000.f, -4108.f,  -14.f };
-__device__ constexpr float4 ARENA_MAX = {  6000.f,  4108.f, 2076.f };
+__device__ constexpr float4 ARENA_MIN = { -4108.f, -6000.f,  -14.f };
+__device__ constexpr float4 ARENA_MAX = {  4108.f,  6000.f, 2076.f };
 
 // Broad phase grid dimensions
 __host__ __device__ constexpr int3   GRID_DIMS = { 48, 48, 12 };

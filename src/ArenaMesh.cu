@@ -27,7 +27,7 @@ Mesh ArenaMesh::loadMeshObj()
         {
             // Vertex world locations
             float x, y, z;
-            s >> x >> y >> z;
+            s >> y >> x >> z;
             verts.push_back({ x, y, z, 0 });
         }
         else if (type == 'f')
