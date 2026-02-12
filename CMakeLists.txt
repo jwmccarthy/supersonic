@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.20)
 
 project(Supersonic LANGUAGES CXX CUDA)
 
+set(CMAKE_CUDA_ARCHITECTURES native)
+
 find_package(CUDAToolkit REQUIRED)
 
 file(GLOB SOURCES src/*.cpp src/*.cu)

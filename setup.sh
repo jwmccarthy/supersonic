@@ -10,4 +10,6 @@ apt-get install -y \
     clang \
     libclang-dev
 
-chmod +x ./run.sh -c -b
+chmod +x ./run.sh
+
+./run.sh -c -b
