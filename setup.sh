@@ -10,6 +10,4 @@ apt-get install -y \
     clang \
     libclang-dev
 
-mkdir -p build && ./build.sh
-
-chmod +x ./run.sh
+chmod +x ./run.sh -c -b
