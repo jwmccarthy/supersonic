@@ -12,16 +12,21 @@ class RLEnvironment
 {
 private:
     // Game physics state
-    GameState  m_state;
+    GameState  h_state;
     GameState* d_state;
 
     // Static arena mesh
-    ArenaMesh  m_arena;
+    ArenaMesh  h_arena;
     ArenaMesh* d_arena;
 
     // Intermediate outputs
-    Workspace  m_space;
+    Workspace  h_space;
     Workspace* d_space;
+
+    // Prefix sum buffer
+    int    h_nPairs;
+    void*  d_cubBuf;
+    size_t cubBytes = 0;
 
 public:
     RLEnvironment(int sims, int numB, int numO, int seed);

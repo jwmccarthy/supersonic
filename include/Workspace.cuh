@@ -3,7 +3,7 @@
 struct Workspace
 {
     // Car-arena collision
-    int*  numTris;  // nCar
-    int4* cellMin;  // nCar
-    int4* cellMax;  // nCar
+    int* cellIdx;  // nCar
+    int* numTris;  // nCar
+    int* triPrfx;  // nCar + 1
 };

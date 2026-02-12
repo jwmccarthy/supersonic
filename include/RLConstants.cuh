@@ -66,24 +66,23 @@ constexpr float INV_CAR_INERTIA_Y = 1 / CAR_INERTIA_Y;
 constexpr float INV_CAR_INERTIA_Z = 1 / CAR_INERTIA_Z;
 
 // Car dimensions/face locations in local space (Octane hitbox from RocketSim)
-__device__ constexpr float4 CAR_EXTENTS = { 120.507f, 86.6994f,  38.6591f, 0.0f };
-__device__ constexpr float4 CAR_HALF_EX = { 60.2535f, 43.3497f, 19.32955f, 0.0f };
-__device__ constexpr float4 CAR_OFFSETS = { 13.8757f,     0.0f,   20.755f, 0.0f };
+__device__ constexpr float4 CAR_EXTENTS = { 120.507f, 86.6994f,  38.6591f };
+__device__ constexpr float4 CAR_HALF_EX = { 60.2535f, 43.3497f, 19.32955f };
+__device__ constexpr float4 CAR_OFFSETS = { 13.8757f,     0.0f,   20.755f };
 
 // World axis helpers
-__device__ constexpr float4 WORLD_X = { 1, 0, 0, 0 };
-__device__ constexpr float4 WORLD_Y = { 0, 1, 0, 0 };
-__device__ constexpr float4 WORLD_Z = { 0, 0, 1, 0 };
+__device__ constexpr float4 WORLD_X = { 1, 0, 0 };
+__device__ constexpr float4 WORLD_Y = { 0, 1, 0 };
+__device__ constexpr float4 WORLD_Z = { 0, 0, 1 };
 
 // Arena extents
-__device__ constexpr float4 ARENA_MIN = { -6000.f, -4108.f,  -14.f, 0.f };
-__device__ constexpr float4 ARENA_MAX = {  6000.f,  4108.f, 2076.f, 0.f };
+__device__ constexpr float4 ARENA_MIN = { -6000.f, -4108.f,  -14.f };
+__device__ constexpr float4 ARENA_MAX = {  6000.f,  4108.f, 2076.f };
 
 // Broad phase grid dimensions
 __host__ __device__ constexpr int3   GRID_DIMS = { 48, 48, 12 };
 __host__ __device__ constexpr float4 CELL_SIZE = {
     (ARENA_MAX.x - ARENA_MIN.x) / GRID_DIMS.x,
     (ARENA_MAX.y - ARENA_MIN.y) / GRID_DIMS.y,
-    (ARENA_MAX.z - ARENA_MIN.z) / GRID_DIMS.z,
-    0.0f
+    (ARENA_MAX.z - ARENA_MIN.z) / GRID_DIMS.z
 };

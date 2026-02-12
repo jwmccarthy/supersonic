@@ -109,7 +109,6 @@ Grid ArenaMesh::buildBroadphaseGrid(Mesh& m)
     std::vector<int> triPre(nCells + 1, 0);
     for (int i = 0; i < nCells; ++i)
     {
-        debugCounts.push_back(cells[i].size());
         triPre[i + 1] = triPre[i] + cells[i].size();
     }
 

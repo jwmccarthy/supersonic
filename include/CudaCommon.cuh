@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <cstddef>
 #include <iostream>
 #include <type_traits>
@@ -39,6 +40,29 @@ inline void cudaMallocSOA(T& s, std::size_t n)
             if (field == nullptr)
             {
                 CUDA_CHECK(cudaMalloc(&field, n * sizeof(P)));
+            }
+        }
+    });
+}
+
+template <class T>
+inline void cudaMallocSOA(T& s, std::initializer_list<int> n)
+{
+    auto it = n.begin();
+
+    boost::pfr::for_each_field(s, [n, it](auto& field) mutable
+    {
+        using F = std::remove_reference_t<decltype(field)>;
+
+        if constexpr (std::is_pointer_v<F>)
+        {
+            assert(it != n.end() && "No enough sizes provided");
+
+            using P = std::remove_pointer_t<F>;
+
+            if (field == nullptr)
+            {
+                CUDA_CHECK(cudaMalloc(&field, (*it++) * sizeof(P)));
             }
         }
     });
