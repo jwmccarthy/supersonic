@@ -7,6 +7,7 @@ sims=1024
 numB=4
 numO=4
 seed=123
+iter=10000
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -34,6 +35,10 @@ while [[ $# -gt 0 ]]; do
       seed=${2:?"Missing value for $1"}
       shift 2
       ;;
+    --iter)
+      iter=${2:?"Missing value for $1"}
+      shift 2
+      ;;
     *)
       exit 2
       ;;
@@ -49,4 +54,4 @@ if [[ ${rebuild} -eq 1 || ! -f build/main ]]; then
   cmake --build build --parallel
 fi
 
-./build/main "${sims}" "${numB}" "${numO}" "${seed}"
+./build/main "${sims}" "${numB}" "${numO}" "${seed}" "${iter}"

@@ -9,9 +9,9 @@
 
 __device__ __forceinline__ void resetBall(Ball* ball, int simIdx)
 {
-    ball->pos[simIdx] = { 0, 0, BALL_REST_Z, 0 };
-    ball->vel[simIdx] = { 0, 0, 0, 0 };
-    ball->ang[simIdx] = { 0, 0, 0, 0 };
+    ball->pos[simIdx] = { 0, 0, BALL_REST_Z };
+    ball->vel[simIdx] = { 0, 0, 0 };
+    ball->ang[simIdx] = { 0, 0, 0 };
 }
 
 __device__ __forceinline__ void resetCar(Cars* cars, int carIdx, int locIdx, bool invert)
@@ -23,9 +23,9 @@ __device__ __forceinline__ void resetCar(Cars* cars, int carIdx, int locIdx, boo
     float y   = invert ? -loc.y   : loc.y;
     float yaw = invert ? -loc.yaw : loc.yaw;;
 
-    cars->pos[carIdx] = { x, y, loc.z, 0 };
-    cars->vel[carIdx] = { 0, 0, 0, 0 };
-    cars->ang[carIdx] = { 0, 0, 0, 0 };
+    cars->pos[carIdx] = { x, y, loc.z };
+    cars->vel[carIdx] = { 0, 0, 0 };
+    cars->ang[carIdx] = { 0, 0, 0 };
     cars->rot[carIdx] = { 0, 0, sinf(yaw / 2), cosf(yaw / 2) };
 }
 
@@ -36,9 +36,9 @@ __device__ __forceinline__ void resetCarRandom(Cars* cars, int carIdx, int seed)
     float z   = hashToRange(seed++, ARENA_MIN.z, ARENA_MAX.z);
     float yaw = hashToRange(seed++, -PI, PI);
 
-    cars->pos[carIdx] = { x, y, z, 0 };
-    cars->vel[carIdx] = { 0, 0, 0, 0 };
-    cars->ang[carIdx] = { 0, 0, 0, 0 };
+    cars->pos[carIdx] = { x, y, z };
+    cars->vel[carIdx] = { 0, 0, 0 };
+    cars->ang[carIdx] = { 0, 0, 0 };
     cars->rot[carIdx] = { 0, 0, sinf(yaw / 2), cosf(yaw / 2) };
 }
 

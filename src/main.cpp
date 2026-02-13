@@ -11,13 +11,18 @@ int main(int argc, char** argv)
     using second = std::chrono::duration<double>;
 
     int sims = (argc > 1) ? std::atoi(argv[1]) : 1024;
-    int nCar = (argc > 2) ? std::atoi(argv[2]) : 4;
-    int seed = (argc > 3) ? std::atoi(argv[3]) : 111;
-    int iter = (argc > 4) ? std::atoi(argv[4]) : 10000;
+    int numB = (argc > 2) ? std::atoi(argv[2]) : 4;
+    int numO = (argc > 3) ? std::atoi(argv[3]) : 4;
+    int seed = (argc > 4) ? std::atoi(argv[4]) : 123;
+    int iter = (argc > 5) ? std::atoi(argv[5]) : 10000;
 
-    std::cout << "sims=" << sims << " nCar=" << nCar << " seed=" << seed << " iter=" << iter << "\n";
+    std::cout << "sims=" << sims 
+              << " numB=" << numB 
+              << " numO=" << numO 
+              << " seed=" << seed 
+              << " iter=" << iter << "\n";
 
-    RLEnvironment env{sims, nCar, nCar, seed};
+    RLEnvironment env{sims, numB, numO, seed};
 
     cudaEvent_t start, stop;
     cudaEventCreate(&start);
