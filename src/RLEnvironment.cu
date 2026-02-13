@@ -1,10 +1,9 @@
+#include <cub/device/device_scan.cuh>
+
 #include "CudaCommon.cuh"
 #include "GameState.cuh"
 #include "CudaKernels.cuh"
 #include "RLEnvironment.cuh"
-
-#include <iostream>
-#include <cub/device/device_scan.cuh>
 
 using ds = cub::DeviceScan;
 
@@ -35,16 +34,18 @@ void RLEnvironment::step()
     int blockSize = 256;
     int gridSize = (h_state.nCar + blockSize - 1) / blockSize;
 
-    // Prefix sum over triangle counts per car
+    // Obtain triangle candidate counts per car
     carArenaBroadPhaseKernel<<<gridSize, blockSize>>>(d_state, d_arena, d_space);
+
+    // Prefix sum over candidate counts to size narrow phase kernel launch
     ds::ExclusiveSum(d_cubBuf, cubBytes, h_space.numTris, h_space.triPrfx, n + 1);
     cudaMemcpy(&h_nPairs, h_space.triPrfx + n, sizeof(int), cudaMemcpyDeviceToHost);
-
-    std::cout << h_nPairs << std::endl;
 
     if (h_nPairs > 0)
     {
         gridSize = (h_nPairs + blockSize - 1) / blockSize;
+
+        // Perform SAT over car-triangle candidate pairs
         carArenaNarrowPhaseKernel<<<gridSize, blockSize>>>(d_state, d_arena, d_space, h_nPairs);
     }
 
@@ -56,6 +57,8 @@ void RLEnvironment::reset()
     int blockSize = 32;
     int gridSize = (h_state.sims + blockSize - 1) / blockSize;
 
+    // Random kickoff positions and ball at center
     resetKernel<<<gridSize, blockSize>>>(d_state);
+
     CUDA_CHECK(cudaDeviceSynchronize());
 }
