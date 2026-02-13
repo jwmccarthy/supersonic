@@ -40,6 +40,8 @@ void RLEnvironment::step()
     ds::ExclusiveSum(d_cubBuf, cubBytes, h_space.numTris, h_space.triPrfx, n + 1);
     cudaMemcpy(&h_nPairs, h_space.triPrfx + n, sizeof(int), cudaMemcpyDeviceToHost);
 
+    std::cout << h_nPairs << std::endl;
+
     if (h_nPairs > 0)
     {
         gridSize = (h_nPairs + blockSize - 1) / blockSize;
