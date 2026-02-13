@@ -7,6 +7,8 @@
 #include <boost/pfr.hpp>
 #include <cuda_runtime.h>
 
+#define DEBUG
+
 #define CUDA_CHECK(val) check((val), #val, __FILE__, __LINE__)
 
 // General error checking for CUDA memory operations

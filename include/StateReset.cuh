@@ -29,6 +29,19 @@ __device__ __forceinline__ void resetCar(Cars* cars, int carIdx, int locIdx, boo
     cars->rot[carIdx] = { 0, 0, sinf(yaw / 2), cosf(yaw / 2) };
 }
 
+__device__ __forceinline__ void resetCarRandom(Cars* cars, int carIdx, int seed)
+{
+    float x   = hashToRange(seed++, ARENA_MIN.x, ARENA_MAX.x);
+    float y   = hashToRange(seed++, ARENA_MIN.y, ARENA_MAX.y);
+    float z   = hashToRange(seed++, ARENA_MIN.z, ARENA_MAX.z);
+    float yaw = hashToRange(seed++, -PI, PI);
+
+    cars->pos[carIdx] = { x, y, z, 0 };
+    cars->vel[carIdx] = { 0, 0, 0, 0 };
+    cars->ang[carIdx] = { 0, 0, 0, 0 };
+    cars->rot[carIdx] = { 0, 0, sinf(yaw / 2), cosf(yaw / 2) };
+}
+
 __device__ __forceinline__ void resetToKickoff(GameState* state, int simIdx)
 {
     const int sims = state->sims;
@@ -36,8 +49,10 @@ __device__ __forceinline__ void resetToKickoff(GameState* state, int simIdx)
     const int numO = state->numO;
     const int nCar = numB + numO;
 
+    int seed = state->seed;
+
     // Pseudorandom kickoff permutation
-    const int  permIdx = hash(simIdx ^ sims) % 120;
+    const int  permIdx = hash(simIdx ^ sims ^ seed) % 120;
     const int* carLocs = KICKOFF_PERMUTATIONS[permIdx];
 
     // Ball back to center field
@@ -55,8 +70,13 @@ __device__ __forceinline__ void resetToKickoff(GameState* state, int simIdx)
             const int locIdx = carLocs[i];
             const int carIdx = simIdx * nCar + (team * numB + i);
 
+#ifdef DEBUG
+            // Random locations during debug
+            resetCarRandom(&state->cars, carIdx, seed ^ carIdx);
+#else
             // Place cars at kickoff positions
             resetCar(&state->cars, carIdx, locIdx, invert);
+#endif
         }
     }
 }
