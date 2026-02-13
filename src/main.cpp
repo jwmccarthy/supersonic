@@ -30,8 +30,6 @@ int main(int argc, char** argv)
 
     env.reset();
 
-    for (int i = 0; i < 1000; i++)
-        env.step();
     cudaDeviceSynchronize();
 
     auto t0 = clock::now();
